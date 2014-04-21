@@ -1,0 +1,24 @@
+{
+  "name": "cprt",
+  "version": "0.0.0",
+  "description": "Architecture ------------",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/seanhess/CPRT.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seanhess/CPRT/issues"
+  },
+  "homepage": "https://github.com/seanhess/CPRT",
+  "devDependencies": {
+    "gulp": "^3.6.1",
+    "gulp-less": "^1.2.3",
+    "gulp-concat": "^2.2.0"
+  }
+}
