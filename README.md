@@ -14,20 +14,30 @@ Tools
 
 - gulp
 
-
 App Design
 ----------
 
-This app tracks
+List of all research projects / Main Screen
 
-- current research progress
-- completed research
-- description of each project and available technology
+- sorted by priority
+- filter by status (competed, in progress, queued)
+- tap to enter details
+- current date and bandwidth per day
+- Add new project
+- drag to sort projects
 
-What if we simplify it by only specifying the order of the projects. Only one active project at a time. 
+Each Project Cell
 
-CPRT RESEARCH
-Alien Power Src lvl 2
-MATPAAS mk 2
-Something Else
+- Name of project
+- Points remaining
+- total points
 
+Details
+
+- view description
+- (admin) edit description
+- add comment
+
+Admin Screen
+
+- (admin) set time has passed / current date?
