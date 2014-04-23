@@ -5,8 +5,9 @@ Architecture
 
 - all hosted on github
 - firebase backend
-- ReactJS + (RxJS or Bacon)
-- Typescript!
+- ReactJS
+- RxJS or BaconJS
+- Pure Javascript (typescript + ReactJS is too complicated right now)
 - Mobile optimized viewport and CSS (just big on a normal screen)
 
 Tools

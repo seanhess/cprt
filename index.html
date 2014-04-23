@@ -8,6 +8,9 @@
         <meta name="description" content="Blueprint: Slide and Push Menus" />
         <meta name="keywords" content="sliding menu, pushing menu, navigation, responsive, menu, css, jquery" />
         <link rel="stylesheet" type="text/css" href="public/build/all.css" />
+
+        <script src="http://fb.me/react-0.10.0.js"></script>
+        <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
     </head>
     <body class="cbp-spmenu-push">
         <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
@@ -21,21 +24,14 @@
         </nav>
         <div>
             <header>
-                <button id="showLeftPush">M</button>
+                <button id="showLeftPush">Monger</button>
             </header>
             <div>
             </div>
         </div>
-        <script>
-            var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
-                showLeftPush = document.getElementById( 'showLeftPush' ),
-                body = document.body;
 
-            showLeftPush.onclick = function() {
-                this.classList.toggle('activre')
-                body.classList.toggle('cbp-spmenu-push-toright')
-                menuLeft.classList.toggle('cbp-spmenu-open')
-            }
-        </script>
+        <div id="woot"></div>
+
+        <script type="text/jsx" src="public/build/app.js"></script>
     </body>
 </html>
