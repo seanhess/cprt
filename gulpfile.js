@@ -5,10 +5,12 @@ var path = require('path')
 var exec = require('child_process').exec
 var browserify = require('gulp-browserify')
 var livereload = require('gulp-livereload')
+var rename = require('gulp-rename')
+var react = require('gulp-react')
 
 var paths = {
     ts: ['./public/**/*.ts'],
-    js: ['./public/**/*.js'],
+    js: ['./public/**/*.jsx'],
     less: ['./public/**/*.less'],
     html: ['index.html', './public/**/*.html'],
     build: './public/build/'
@@ -21,23 +23,29 @@ gulp.task('less', function() {
         .pipe(gulp.dest(paths.build))
 })
 
-gulp.task('browserify', function() {
-    gulp.src('./public/app/app.js')
-        .pipe(browserify())
+gulp.task('compile', function() {
+    gulp.src('./public/app/app.jsx', {read:false})
+        .pipe(browserify({
+            insertGlobals: false,
+            transform: ['reactify'],
+            extensions: ['.js'],
+            debug: true
+        }))
+        .pipe(rename('app.js'))
         .pipe(gulp.dest(paths.build))
 })
 
 gulp.task('watch', function() {
     var server = livereload()
-    gulp.watch(paths.less, ['less']).on('change', onFileChange)
-    gulp.watch(paths.js, ['browserify']).on('change', onFileChange)
-    gulp.watch(paths.html, []).on('change', onFileChange)
 
-    function onFileChange(file) {
+    gulp.watch(paths.less, ['less'])
+    gulp.watch(paths.js, ['compile'])
+
+    gulp.watch([paths.html, 'public/build/**']).on('change', function(file) {
         server.changed(file.path)
-    }
+    })
 })
 
-gulp.task('build', ['browserify', 'less'])
+gulp.task('build', ['compile', 'less'])
 gulp.task('default', ['build', 'watch'])
 

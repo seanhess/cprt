@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-      
 var HelloWorld = React.createClass({
     render: function() {
         return (
@@ -16,3 +14,5 @@ React.renderComponent(
   document.getElementById('woot')
 );
 
+
+console.log("LOAD BABYT whatzer")
