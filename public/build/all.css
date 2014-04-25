@@ -279,3 +279,9 @@ html {
 .clearfix:after {
   clear: both;
 }
+.menu-button {
+  position: absolute;
+}
+.page-header {
+  text-align: center;
+}
