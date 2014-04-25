@@ -29,12 +29,11 @@ var ProjectPage = module.exports = React.createClass({
     },
 
     addNewProject: function(project) {
-        console.log("ADD NEW PROJET")
         this.setState({projects: this.state.projects, currentPage: 'form'})
     },
 
     onNewProject: function(project) {
-        console.log("NEW PROJECT", project)
+        this.setState({projects: this.state.projects.concat([project]), currentPage: 'list'})
     },
 })
 
@@ -57,7 +56,6 @@ var ProjectRow = React.createClass({
     },
 
     onClick: function() {
-        console.log("CLICKED PROJECT")
         this.props.onSelectProject(this.props.project)
     },
 })
