@@ -1,14 +1,6 @@
-var HelloWorld = React.createClass({
-    render: function() {
-        return (
-            <p>
-                  Hello, <input type="text" placeholder="Your name here" />!
-                  It is {this.props.date.toTimeString()}
-            </p>
-        );
-    }
-});
+var Projects = require('./projects.jsx')
 
+// Shows/hides, takes an array of pages that it renders and reports as selected
 var Nav = React.createClass({
     render: function() {
 
@@ -21,14 +13,19 @@ var Nav = React.createClass({
 
         return (<nav className={classes} id="cbp-spmenu-s1">
             <h3>Menu</h3>
-            <a href="#">Celery seakale</a>
-            <a href="#">Dulse daikon</a>
-            <a href="#">Zucchini garlic</a>
-            <a href="#">Catsear azuki bean</a>
-            <a href="#">Dandelion bunya</a>
-            <a href="#">Rutabaga</a>
+            {this.renderPages()}
         </nav>)
-    }
+    },
+
+    renderPages: function() {
+        return this.props.pages.map(function(page) {
+            return <a key={page.name} onClick={this.onSelect.bind(this, page)}>{page.name}</a>
+        }.bind(this))
+    },
+
+    onSelect: function(page) {
+        this.props.onSelect(page)
+    },
 })
 
 var DataTest = React.createClass({
@@ -62,7 +59,7 @@ var DataTest = React.createClass({
 
     onChangeField: function(event) {
         console.log("Changed", event.target.value)
-        this.fakeSuperComment.text = event.target.value
+        this.fakeSuperComment.text = event.target.value // or this.refs.text
         this.setState({comments:[this.fakeSuperComment]})
     },
 })
@@ -79,12 +76,21 @@ var Comment = React.createClass({
 
 var Root = React.createClass({
 
+    pages: [
+        {name: "Projects", component: <Projects />},
+        {name: "Data Test", component: <DataTest />},
+    ],
+
     getInitialState: function() {
-        return {isMenuOpen: false}
+        return {isMenuOpen: false, currentPage: this.pages[0]}
     },
 
     showMenu: function() {
         this.setState({isMenuOpen: !this.state.isMenuOpen})
+    },
+
+    onNav: function(page) {
+        this.setState({isMenuOpen: false, currentPage: page})
     },
 
     render: function() {
@@ -94,15 +100,17 @@ var Root = React.createClass({
         })
         return (
             <div className={classes}>
-                <Nav isOpen={this.state.isMenuOpen}/>
+                <Nav isOpen={this.state.isMenuOpen} onSelect={this.onNav} pages={this.pages}/>
                 <button onClick={this.showMenu}>M</button>
-                <HelloWorld date={new Date()}/>
-                <p>This is a test</p>
-                <DataTest />
+                <div className="active-page">
+                    {this.state.currentPage.component}
+                </div>
             </div>
         )
     }
 })
+
+
 
 React.renderComponent(<Root />, document.getElementById('root'));
 
