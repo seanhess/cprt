@@ -7,25 +7,12 @@ var ProjectPage = module.exports = React.createClass({
     },
 
     componentWillMount: function() {
-        // this should go somewhere else...
-        fb.projectsRef.on('child_added', function(snapshot, prevChildName) {
-            var project = snapshot.val()
-            project.id = snapshot.name()
-            var projects = this.state.projects.concat([project])
-            this.setState({ projects: projects})
+        // I'm not happy that I have to keep this around.
+        // it doesn't feel like it really belongs in the state either
+        this.projectsManagedArray = fb.managedArray(fb.projectsRef, function(projects) {
+            console.log("HI", projects)
+            this.setState({projects:  projects})
         }.bind(this))
-
-        fb.projectsRef.on('child_removed', function(snapshot) {
-            var projects = this.state.projects.filter(function(project) {
-                return project.name != snapshot.name()
-            })
-            this.setState({projects: projects})
-        }.bind(this))
-
-        // fb.projectsRef.on('child_changed', function(snapshot, prevChildName) {
-        //     var projects = this.state.projects.concat([snapshot.val()])
-        //     this.setState({projects: projects, currentPage: this.state.currentPage})
-        // })
     },
 
     render: function() {
@@ -65,8 +52,8 @@ var ProjectPage = module.exports = React.createClass({
     },
 
     onNewProject: function(project) {
-        var childRef = fb.projectsRef.child(fb.nameId(project.name))
-        childRef.set(project)
+        project.id = fb.nameId(project.name)
+        this.projectsManagedArray.add(project)
         this.setState({currentPage: 'list'})
     },
 })
