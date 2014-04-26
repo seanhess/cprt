@@ -1,39 +1,73 @@
+var fb = require('./firebase')
+
 var ProjectPage = module.exports = React.createClass({
 
     getInitialState: function() {
-        return {projects: fakeProjects, currentPage: 'list'}
+        return {projects: [], currentPage: 'list', selectedProject: null}
+    },
+
+    componentWillMount: function() {
+        // this should go somewhere else...
+        fb.projectsRef.on('child_added', function(snapshot, prevChildName) {
+            var project = snapshot.val()
+            project.id = snapshot.name()
+            var projects = this.state.projects.concat([project])
+            this.setState({ projects: projects})
+        }.bind(this))
+
+        fb.projectsRef.on('child_removed', function(snapshot) {
+            var projects = this.state.projects.filter(function(project) {
+                return project.name != snapshot.name()
+            })
+            this.setState({projects: projects})
+        }.bind(this))
+
+        // fb.projectsRef.on('child_changed', function(snapshot, prevChildName) {
+        //     var projects = this.state.projects.concat([snapshot.val()])
+        //     this.setState({projects: projects, currentPage: this.state.currentPage})
+        // })
     },
 
     render: function() {
         var page;
-        if (this.state.currentPage == "list")
-            page = <ProjectsList projects={this.state.projects} onSelectProject={this.onSelectProject}/>
-        else if (this.state.currentPage == "form")
+        if (this.state.currentPage == "list") {
+            page = (<div>
+                <button onClick={this.addNewProject}>Add New Project</button>
+                <ProjectsList projects={this.state.projects} onSelectProject={this.onSelectProject}/>
+            </div>)
+        }
+
+        else if (this.state.currentPage == "form") {
             page = <ProjectForm onNewProject={this.onNewProject} />
-        else if (this.state.currentPage == "details")
-            page = <div>DETAILS</div>
+        }
+        else if (this.state.currentPage == "details") {
+            page = <ProjectDetails project={this.state.selectedProject} onClose={this.closeProject}/>
+        }
 
         return (
             <div>
                 <h3 className="page-header">Projects</h3>
-                <div>
-                    <button onClick={this.addNewProject}>Add New Project</button>
-                </div>
                 {page}
             </div>
         )
     },
 
-    onSelectProject: function(project) {
-        console.log("SELECTED PROJECT", project)
+    closeProject: function() {
+        this.setState({currentPage: 'list'})
     },
 
-    addNewProject: function(project) {
-        this.setState({projects: this.state.projects, currentPage: 'form'})
+    onSelectProject: function(project) {
+        this.setState({selectedProject: project, currentPage:'details'})
+    },
+
+    addNewProject: function() {
+        this.setState({currentPage: 'form'})
     },
 
     onNewProject: function(project) {
-        this.setState({projects: this.state.projects.concat([project]), currentPage: 'list'})
+        var childRef = fb.projectsRef.child(fb.nameId(project.name))
+        childRef.set(project)
+        this.setState({currentPage: 'list'})
     },
 })
 
@@ -70,11 +104,19 @@ var ProjectForm = React.createClass({
     },
 
     onSubmit: function() {
-        console.log("ON SUBMIT")
         this.props.onNewProject({
             name: this.refs.name.getDOMNode().value
         })
         return false
+    },
+})
+
+var ProjectDetails = React.createClass({
+    render: function() {
+        return (<div className="project-details">
+            {this.props.project.name}
+            <div><button onClick={this.props.onClose}>Close</button></div>
+        </div>)
     },
 })
 

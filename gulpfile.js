@@ -7,10 +7,11 @@ var browserify = require('gulp-browserify')
 var livereload = require('gulp-livereload')
 var rename = require('gulp-rename')
 var react = require('gulp-react')
+var gutil = require('gulp-util')
 
 var paths = {
     ts: ['./public/**/*.ts'],
-    js: ['./public/**/*.jsx'],
+    js: ['./public/**/*.jsx', './public/**/*.js'],
     less: ['./public/**/*.less'],
     html: ['index.html', './public/**/*.html'],
     build: './public/build/'
@@ -30,7 +31,12 @@ gulp.task('compile', function() {
             transform: ['reactify'],
             extensions: ['.js'],
             debug: true
-        }))
+        })
+            .on('error', gutil.beep)
+            .on('error', function(err) {
+                console.log("BROWSERIFY ERROR", err.message)
+            })
+        )
         .pipe(rename('app.js'))
         .pipe(gulp.dest(paths.build))
 })
