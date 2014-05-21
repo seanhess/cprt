@@ -1,4 +1,5 @@
 @import "./cbp.less";
+@text-secondary: "#888";
 
 *, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 body, html { font-size: 100%; padding: 0; margin: 0;}
@@ -8,8 +9,7 @@ body, html { font-size: 100%; padding: 0; margin: 0;}
 .clearfix:after { clear: both; }
 
 body {
-    // font-family: 'Lato', Calibri, Arial, sans-serif;
-    // color: #47a3da;
+    font-family: "Courier New";
 }
 
 a {
@@ -32,4 +32,34 @@ a:hover {
 
 .page-header {
     text-align: center;
+}
+
+.site-header-title {
+    text-align: center;
+}
+
+.header-info {
+    float: right;
+}
+
+.row-title {
+    font-size: 18px;
+}
+
+.row-data {
+    float: right;
+    margin-right: 10px;
+}
+
+.row-data-label {
+    color: @text-secondary;
+    font-size: 12px;
+}
+
+.table-row {
+    clear: both;
+}
+
+.page-padding {
+    padding: 15px;
 }

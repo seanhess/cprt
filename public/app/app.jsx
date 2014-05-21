@@ -1,12 +1,14 @@
 var Projects = require('./projects.jsx')
 var Nav = require('./nav.jsx')
 var DataTest = require('./test.jsx')
+var Login = require('./login.jsx')
 
 var Root = React.createClass({
 
     pages: [
         {name: "Projects", component: <Projects />},
-        {name: "Data Test", component: <DataTest />},
+        // {name: "Data Test", component: <DataTest />},
+        {name: "Login", component: <Login />},
     ],
 
     getInitialState: function() {
@@ -30,7 +32,8 @@ var Root = React.createClass({
         return (
             <div className={classes}>
                 <Nav isOpen={this.state.isMenuOpen} onSelect={this.onNav} pages={this.pages}/>
-                <button className="menu-button" onClick={this.showMenu}>M</button>
+                <button className="menu-button" onClick={this.showMenu}>Menu</button>
+
                 <div className="active-page">
                     {this.state.currentPage.component}
                 </div>
@@ -40,3 +43,7 @@ var Root = React.createClass({
 })
 
 React.renderComponent(<Root />, document.getElementById('root'));
+
+// I need some kind of navigation controller
+// unless I have it get back to the root somehow...
+// unless I REPEAT the header on each page

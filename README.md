@@ -31,13 +31,15 @@ Each Project Cell
 
 - Name of project
 - Points remaining
-- total points
+- total points 
+- points allocated
 
 Details
 
 - view description
 - (admin) edit description
 - add comment
+- add / remove points allocated. (Show total points)
 
 Admin Screen
 

@@ -279,9 +279,35 @@ html {
 .clearfix:after {
   clear: both;
 }
+body {
+  font-family: "Courier New";
+}
 .menu-button {
   position: absolute;
 }
 .page-header {
   text-align: center;
+}
+.site-header-title {
+  text-align: center;
+}
+.header-info {
+  float: right;
+}
+.row-title {
+  font-size: 18px;
+}
+.row-data {
+  float: right;
+  margin-right: 10px;
+}
+.row-data-label {
+  color: "#888";
+  font-size: 12px;
+}
+.table-row {
+  clear: both;
+}
+.page-padding {
+  padding: 15px;
 }

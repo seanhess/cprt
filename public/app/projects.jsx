@@ -9,8 +9,11 @@ var ProjectPage = module.exports = React.createClass({
     componentWillMount: function() {
         // I'm not happy that I have to keep this around.
         // it doesn't feel like it really belongs in the state either
+
+        // I'd say put it in the parent too
+        // rule of thumb: views should be renerable server-side
+
         this.projectsManagedArray = fb.managedArray(fb.projectsRef, function(projects) {
-            console.log("HI", projects)
             this.setState({projects:  projects})
         }.bind(this))
     },
@@ -19,7 +22,7 @@ var ProjectPage = module.exports = React.createClass({
         var page;
         if (this.state.currentPage == "list") {
             page = (<div>
-                <button onClick={this.addNewProject}>Add New Project</button>
+                <button onClick={this.addNewProject}>+ New Project</button>
                 <ProjectsList projects={this.state.projects} onSelectProject={this.onSelectProject}/>
             </div>)
         }
@@ -31,12 +34,13 @@ var ProjectPage = module.exports = React.createClass({
             page = <ProjectDetails project={this.state.selectedProject} onClose={this.closeProject}/>
         }
 
-        return (
-            <div>
-                <h3 className="page-header">Projects</h3>
-                {page}
-            </div>
-        )
+        return (<div className="page-padding">
+            <header>
+                <div className="header-info">0/10 points</div>
+                <h1 className="site-header-title">CPRT: Projects</h1>
+            </header> 
+            <div>{page}</div>
+        </div>)
     },
 
     closeProject: function() {
@@ -71,8 +75,16 @@ var ProjectsList = React.createClass({
 var ProjectRow = React.createClass({
     render: function() {
         var project = this.props.project
-        return (<div className="project-row" onClick={this.onClick}>
-            <span>{project.name}</span>
+        return (<div className="table-row" onClick={this.onClick}>
+            <span className="row-title">{project.name}</span>
+            <span className="row-data">
+                <div className="row-data-value">40</div>
+                <div className="row-data-label">left</div>
+            </span>
+            <span className="row-data">
+                <div className="row-data-value">10</div>
+                <div className="row-data-label">priority</div>
+            </span>
         </div>)
     },
 
@@ -101,8 +113,8 @@ var ProjectForm = React.createClass({
 var ProjectDetails = React.createClass({
     render: function() {
         return (<div className="project-details">
-            {this.props.project.name}
             <div><button onClick={this.props.onClose}>Close</button></div>
+            <div>{this.props.project.name}</div>
         </div>)
     },
 })
