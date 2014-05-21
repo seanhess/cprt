@@ -1,4 +1,4 @@
-var Projects = require('./projects.jsx')
+var ProjectPage = require('./projects/ProjectPage.jsx')
 var Nav = require('./nav.jsx')
 var DataTest = require('./test.jsx')
 var Login = require('./login.jsx')
@@ -6,7 +6,7 @@ var Login = require('./login.jsx')
 var Root = React.createClass({
 
     pages: [
-        {name: "Projects", component: <Projects />},
+        {name: "Projects", component: <ProjectPage />},
         // {name: "Data Test", component: <DataTest />},
         {name: "Login", component: <Login />},
     ],

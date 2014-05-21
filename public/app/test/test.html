@@ -1,0 +1,28 @@
+<svg class="progress-radial" width="300px" height="300px" viewBox="0 0 300 300" shape-rendering="geometricPrecision">
+  <defs>
+    <!-- In production make sure the mask id is discrete if you plan on using multiple instances on one page -->
+    <mask id="circle_mask" x="0" y="0" width="300" height="300" maskUnits="userSpaceOnUse">
+      <!-- The outer shape hides everything outside of the circle 
+           This is necessary because the path used to create the bar does not perfectly
+           match the shape of a circle. We render the path larger than needed and mask it's edges
+           to create a perfect circle. -->
+      <circle cx="150" cy="150" r="153" stroke-width="0" fill="black" opacity="1"/>
+      
+      <!-- The middle shape defines the visible area -->
+      <circle cx="150" cy="150" r="150" stroke-width="0" fill="white" opacity="1"/>
+      
+      <!-- The inner shape creates the hole in the center.
+           The value `r` defines the radius of the hole. -->
+      <circle class="progress-radial-mask-inner" cx="150" cy="150" r="120" stroke-width="0" fill="black" opacity="1"/>
+    </mask>
+  </defs>
+  <g mask="url(#circle_mask)">
+    <circle class="progress-radial-track" cx="150" cy="150" r="150" stroke-width="0" opacity="1"/>
+    <path class="progress-radial-bar" transform="translate(150, 150)" 
+          d="M 0 0">
+    </path>
+  </g>
+  <g style="font-family: Space Toaster;font-size:60pt; fill:black;"> 
+    <text text-anchor="middle" id="mytext" x="150" y="165"> 10% </text> 
+  </g>  
+</svg>

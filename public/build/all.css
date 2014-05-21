@@ -300,6 +300,7 @@ body {
 .row-data {
   float: right;
   margin-right: 10px;
+  text-align: center;
 }
 .row-data-label {
   color: "#888";
@@ -310,4 +311,26 @@ body {
 }
 .page-padding {
   padding: 15px;
+}
+.percent-box {
+  position: relative;
+  border: solid 1px #333;
+  width: 40px;
+  height: 30px;
+  margin-bottom: 6px;
+  margin-top: -3px;
+}
+.percent-box-background {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: #AAF;
+}
+.percent-box-data {
+  position: absolute;
+  text-align: center;
+  top: 5px;
+  left: 1px;
+  right: 1px;
 }

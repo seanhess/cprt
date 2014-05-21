@@ -3,6 +3,8 @@
 var rootRef = exports.rootRef = new Firebase("https://cprt.firebaseio.com/");
 var projectsRef = exports.projectsRef = rootRef.child("projects")
 
+console.log("HI FIREBASE")
+
 // I can maintain the state here I guess.... 
 
 exports.nameId = function(name) {
@@ -34,6 +36,11 @@ exports.managedArray = function(ref, onUpdate) {
             console.log("ADDING", item, item.id)
             var childRef = ref.child(item.id)
             childRef.set(item)
-        }
+        },
+
+        remove: function(item) {
+            var childRef = ref.child(item.id)
+            childRef.remove()
+        },
     }
 }
